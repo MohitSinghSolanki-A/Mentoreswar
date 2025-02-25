@@ -1,15 +1,9 @@
 
 import './App.css'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Testimonial from './components/Testimonial'
+import Home from './components/Home/Home'
 
 export default function App() {
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <Testimonial />
-    </>
+    <Home />
   )
 }
