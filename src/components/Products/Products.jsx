@@ -1,19 +1,35 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Products.css';
 
 export default function Products() {
+  const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState('all');
-  
-  const products = [
-    { id: 1, name: 'Product 1', category: 'electronics', price: 99.99 },
-    { id: 2, name: 'Product 2', category: 'clothing', price: 49.99 },
-    { id: 3, name: 'Product 3', category: 'electronics', price: 149.99 },
-  ];
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products');
+      const data = await response.json();
+      setProducts(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setLoading(false);
+    }
+  };
 
   const filteredProducts = filter === 'all' 
     ? products 
     : products.filter(product => product.category === filter);
+
+  if (loading) {
+    return <div className="loading">Loading products...</div>;
+  }
 
   return (
     <div className="products-container">
@@ -24,9 +40,11 @@ export default function Products() {
       </div>
       <div className="products-grid">
         {filteredProducts.map(product => (
-          <div key={product.id} className="product-card">
+          <div key={product._id} className="product-card">
+            <img src={product.image} alt={product.name} className="product-image" />
             <h3>{product.name}</h3>
-            <p>${product.price}</p>
+            <p className="product-description">{product.description}</p>
+            <p className="product-price">${product.price}</p>
             <button className="buy-now">Buy Now</button>
           </div>
         ))}
