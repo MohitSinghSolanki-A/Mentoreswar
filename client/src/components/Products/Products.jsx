@@ -1,11 +1,12 @@
-
 import { useState, useEffect } from 'react';
+import { useLocation } from "wouter";
 import './Products.css';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     fetchProducts();
@@ -13,7 +14,7 @@ export default function Products() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('/api/products');
+      const response = await fetch('http://localhost:3001/api/products');
       const data = await response.json();
       setProducts(data);
       setLoading(false);
@@ -23,8 +24,8 @@ export default function Products() {
     }
   };
 
-  const filteredProducts = filter === 'all' 
-    ? products 
+  const filteredProducts = filter === 'all'
+    ? products
     : products.filter(product => product.category === filter);
 
   if (loading) {
@@ -41,11 +42,17 @@ export default function Products() {
       <div className="products-grid">
         {filteredProducts.map(product => (
           <div key={product._id} className="product-card">
-            <img src={product.image} alt={product.name} className="product-image" />
-            <h3>{product.name}</h3>
+            <div className="product-image-container">
+              <img src={product.imageUrl} alt={product.title} className="product-image" />
+            </div>
+            <h3 className="product-title">{product.title}</h3>
             <p className="product-description">{product.description}</p>
-            <p className="product-price">${product.price}</p>
-            <button className="buy-now">Buy Now</button>
+            <div className="product-footer">
+              <span className="product-price">${(product.price / 100).toFixed(2)}</span>
+              <button className="view-details" onClick={() => setLocation(`/product/${product.id}`)}>
+                View Details
+              </button>
+            </div>
           </div>
         ))}
       </div>
