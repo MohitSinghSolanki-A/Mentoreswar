@@ -36,9 +36,11 @@ export default function Navbar() {
         </div>
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
           <li><a href="#home">Home</a></li>
+          <li><Link to="/products">Products</Link></li>
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li><Link to="/cart" className="cart-icon">🛒</Link></li>
           <li>
             <Link to="/login" className="auth-btn">
               Login/Signup
@@ -46,7 +48,6 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-
-      </nav>
+    </nav>
   );
 }
