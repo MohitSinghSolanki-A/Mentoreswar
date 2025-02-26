@@ -13,13 +13,22 @@ const getProducts = async (req, res) => {
 // Add a new product
 const addProduct = async (req, res) => {
   try {
-    const product = new Product(req.body);
-    await product.save();
-    res.status(201).json(product);
-  } catch (err) {
-    res.status(400).json({ error: 'Error adding product' });
+    const { title, description, price, isTestSeries, subjects } = req.body;
+
+    const newProduct = new Product({
+      title,
+      description,
+      price,
+      isTestSeries,
+      subjects: isTestSeries ? subjects : [],
+    });
+
+    await newProduct.save();
+    res.status(201).json({ message: "Product added successfully", newProduct });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}
 
 // Get product by ID
 const getProductById = async (req, res) => {
