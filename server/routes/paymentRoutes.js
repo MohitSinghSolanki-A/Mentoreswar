@@ -4,7 +4,7 @@ const authenticateToken = require("../middleware/auth"); // Ensure user is logge
 
 const router = express.Router();
 
-router.post("/create-order", authenticateToken, createOrder);
-router.post("/verify-payment", authenticateToken, verifyPayment);
+router.post("/create-order", createOrder);
+router.post("/verify-payment", verifyPayment);
 
 module.exports = router;

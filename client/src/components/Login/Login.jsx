@@ -5,7 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 
 
-export default function Login({ setisAuthenticated }) {
+
+export default function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showRegister, setShowRegister] = useState(false); // Track if user exists
@@ -26,11 +27,15 @@ export default function Login({ setisAuthenticated }) {
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (response.ok) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
         localStorage.setItem("isAuthenticated", "true");
+
         toast.success("🎉 Login successful!", { position: "top-right" });
+
         setTimeout(() => {
           window.location.href = "/";
         }, 2000);
@@ -48,6 +53,7 @@ export default function Login({ setisAuthenticated }) {
       toast.error("❌ Something went wrong. Try again!", { position: "top-right" });
     }
   };
+
 
   return (
     <div className="login-container">

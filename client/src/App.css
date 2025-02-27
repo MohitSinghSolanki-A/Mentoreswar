@@ -10,7 +10,6 @@ body {
   line-height: 1.6;
 }
 
-/* Ensure full height of the page */
 html,
 body,
 #root {
@@ -21,18 +20,14 @@ body,
   flex-direction: column;
 }
 
-/* Main container to stretch content */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* Full viewport height */
 }
 
-/* Main content should expand to push footer down */
 .main-content {
   flex: 1;
-  /* This allows it to grow and push footer down */
 }
 
 /* Footer styling */

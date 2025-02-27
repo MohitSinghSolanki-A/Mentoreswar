@@ -30,7 +30,6 @@ const addProduct = async (req, res) => {
   }
 }
 
-// Get product by ID
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);

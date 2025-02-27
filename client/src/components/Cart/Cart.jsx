@@ -1,18 +1,19 @@
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 
 export default function Cart() {
     const { cart, removeFromCart } = useContext(CartContext);
-    const [, setLocation] = useLocation();
+    const navigate = useNavigate();
 
     const handleCheckout = () => {
         if (cart.length === 0) {
-            alert("Your cart is empty!");
+            alert("⚠️ Your cart is empty!");
             return;
         }
-        setLocation("/checkout");
+        localStorage.setItem("cartItems", JSON.stringify(cart)); // Store cart in local storage
+        navigate("/checkout");
     };
 
     const totalAmount = cart.reduce((sum, item) => sum + item.price, 0);
@@ -39,9 +40,7 @@ export default function Cart() {
                         Buy Now
                     </button>
                 </div>
-
             )}
-
         </div>
     );
 }

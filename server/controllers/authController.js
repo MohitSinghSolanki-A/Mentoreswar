@@ -48,8 +48,31 @@ const login = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, "your_jwt_secret", { expiresIn: "1h" });
 
-    res.status(200).json({ token, message: "Login successful" });
+    res.status(200).json({ token, userId: user._id, message: "Login successful" });
 
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// 🔹 Get user by ID
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id).select("-password");
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password"); // Exclude passwords
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -57,4 +80,5 @@ const login = async (req, res) => {
 
 
 
-module.exports = { register, login };
+
+module.exports = { register, login, getUserById, getAllUsers };

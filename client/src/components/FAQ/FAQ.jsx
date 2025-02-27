@@ -1,35 +1,44 @@
 import './FAQ.css';
+import { useState } from "react";
+
+
+const faqs = [
+  { question: "Why is the moon sometimes out during the day?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { question: "Why is the sky blue?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { question: "Will we ever discover aliens?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { question: "How much does the Earth weigh?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { question: "How do airplanes stay up?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
+];
 
 export default function FAQ() {
-  const faqs = [
-    {
-      id: 1,
-      question: "What services do you offer?",
-      answer: "We offer a wide range of digital solutions including web development, mobile apps, and cloud services."
-    },
-    {
-      id: 2,
-      question: "How can I get started?",
-      answer: "Simply contact us through our contact form or click the 'Get Started' button above."
-    },
-    {
-      id: 3,
-      question: "What are your pricing plans?",
-      answer: "We offer customized pricing based on your specific needs. Contact us for a quote."
-    }
-  ];
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleAccordion = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
-    <section className="faq-section">
-      <h2>Frequently Asked Questions</h2>
-      <div className="faq-container">
-        {faqs.map(faq => (
-          <div key={faq.id} className="faq-item">
-            <h3>{faq.question}</h3>
-            <p>{faq.answer}</p>
+    <div className="container">
+      <h2 className="faq-title">Frequently Asked Questions</h2>
+      <div className="accordion">
+        {faqs.map((faq, index) => (
+          <div key={index} className="accordion-item">
+            <button
+              onClick={() => toggleAccordion(index)}
+              className={openIndex === index ? "active" : ""}
+              aria-expanded={openIndex === index}
+            >
+              <span className="accordion-title">{faq.question}</span>
+              <span className="icon">{openIndex === index ? "▲" : "▼"}</span>
+            </button>
+            {openIndex === index && (
+              <div className="accordion-content">
+                <p>{faq.answer}</p>
+              </div>
+            )}
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

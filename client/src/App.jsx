@@ -7,7 +7,8 @@ import Navbar from "./components/Navbar";
 import Register from "./components/Register/Register";
 import Checkout from "./components/Checkout/Checkout";
 import Footer from "./components/Footer/Footer";
-import Cart from "./components/Cart/Cart";
+import Contact from "./components/Contactus/contactus";
+import ThankYou from "./components/thankyou/thankyou";
 
 export default function App() {
   return (
@@ -21,7 +22,8 @@ export default function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/register" element={<Register />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path='/thankyou' element={<ThankYou />} />
+            <Route path='/contact' element={<Contact />} />
           </Routes>
         </div>
 

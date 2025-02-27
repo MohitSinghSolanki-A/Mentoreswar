@@ -1,27 +1,40 @@
-/* 🌟 Navbar Styling */
+/* Body to prevent content from hiding under navbar */
+body {
+  padding-top: 60px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #2c3e50;
+  padding: 15px 20px;
+  background-color: #121212;
   color: white;
-  padding: 1rem 2rem;
   position: fixed;
   width: 100%;
   top: 0;
+  left: 0;
   z-index: 1000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease-in-out;
 }
 
-/* 🔹 Logo Styling */
+/* Logo */
 .logo a {
-  font-size: 1.8rem;
-  font-weight: bold;
-  text-decoration: none;
   color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
-/* 🔗 Navigation Links */
+.logo a:hover {
+  color: #1db954;
+}
+
+/* Navbar Links */
 .nav-links {
   display: flex;
   list-style: none;
@@ -29,89 +42,114 @@
 }
 
 .nav-links li {
-  display: flex;
-  align-items: center;
+  list-style: none;
 }
 
 .nav-links a {
-  text-decoration: none;
   color: white;
+  text-decoration: none;
   font-size: 1rem;
-  transition: 0.3s;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Underline Effect on Hover */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -3px;
+  left: 50%;
+  background-color: #1db954;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-50%);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
 }
 
 .nav-links a:hover {
-  color: #f1c40f;
+  color: #1db954;
 }
 
-/* 🛒 Cart Icon */
-.cart-icon {
-  font-size: 1.5rem;
-}
-
-/* 🔹 Auth Buttons */
-.auth-btn {
-  padding: 8px 14px;
-  background: #f39c12;
+/* Animated Button */
+button {
+  background: #1db954;
   color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
   border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
-.auth-btn:hover {
-  background: #e67e22;
+button:hover {
+  background: white;
+  color: #1db954;
+  box-shadow: 0px 4px 10px rgba(0, 255, 0, 0.5);
 }
 
-/* 🔴 Logout Button */
-.logout {
-  background: #e74c3c;
+/* Icons */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.logout:hover {
-  background: #c0392b;
+.icon {
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-/* 📱 Mobile-Friendly Hamburger Menu */
+.icon:hover {
+  transform: scale(1.2);
+}
+
+/* Hamburger Menu */
 .hamburger {
   display: none;
-  flex-direction: column;
+  font-size: 1.8rem;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
 }
 
-.hamburger span {
-  background: white;
-  height: 3px;
-  width: 25px;
-  margin: 4px 0;
-  transition: 0.3s;
+.hamburger:hover {
+  transform: rotate(90deg);
 }
 
-/* 📱 Responsive Styles */
+/* Mobile Responsive */
 @media (max-width: 768px) {
-  .nav-right {
-    display: flex;
-    align-items: center;
-  }
-
   .nav-links {
     display: none;
     flex-direction: column;
+    background-color: #121212;
     position: absolute;
     top: 60px;
-    right: 0;
-    background: #2c3e50;
+    left: 0;
     width: 100%;
-    padding: 20px 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 15px 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
-  .nav-links.active {
+  .nav-links.open {
     display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .icons {
+    display: none;
+    /* Hide icons on mobile */
   }
 
   .hamburger {
-    display: flex;
+    display: block;
   }
 }

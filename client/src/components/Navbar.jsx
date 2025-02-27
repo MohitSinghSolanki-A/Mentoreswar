@@ -1,60 +1,50 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
 import "./Navbar.css";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem("isAuthenticated") === "true"
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsAuthenticated(localStorage.getItem("isAuthenticated") === "true");
+    const authStatus = localStorage.getItem("isAuthenticated") === "true";
+    setIsLoggedIn(authStatus);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("isAuthenticated");
-    setIsAuthenticated(false);  // ✅ Update state immediately
+    localStorage.removeItem("userId");
+    setIsLoggedIn(false);
     navigate("/login");
   };
 
-
   return (
     <nav className="navbar">
+      {/* Logo */}
       <div className="logo">
-        <Link to="/">📘 MyStore</Link>
+        <Link to="/">Mentoreswar</Link>
       </div>
 
-      <div className="nav-right">
-        <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <ul className={`nav-links ${isOpen ? "active" : ""}`}>
-          <li><a href="#home">Home</a></li>
-          <li><Link to="/products">Products</Link></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-
-          {isAuthenticated ? (
-            <>
-              <li><Link to="/cart" className="cart-icon">🛒</Link></li>
-              <li>
-                <button onClick={handleLogout} className="auth-btn logout">Logout</button>
-              </li>
-            </>
-          ) : (
-            <li>
-              <Link to="/login" className="auth-btn">Login / Signup</Link>
-            </li>
-          )}
-        </ul>
+      {/* Hamburger Menu */}
+      <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+        {menuOpen ? <FaTimes /> : <FaBars />}
       </div>
+
+      {/* Navbar Links */}
+      <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
+        <li><Link to="/" onClick={() => setMenuOpen(false)}>About Us</Link></li>
+        <li><Link to="/products" onClick={() => setMenuOpen(false)}>TestSeries</Link></li>
+        <li><Link to="/TestSeries" onClick={() => setMenuOpen(false)}>ViewTest</Link></li>
+        <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact Us</Link></li>
+        {isLoggedIn ? (
+          <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>
+        ) : (
+          <li><Link to="/login" className="login-btn">Login</Link></li>
+        )}
+      </ul>
     </nav>
   );
 }

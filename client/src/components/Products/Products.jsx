@@ -1,14 +1,15 @@
 import { useState, useEffect, useContext } from "react";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Products.css"; // External CSS only
 import { CartContext } from "../Cart/CartContext"; // Ensure correct import
 
+
 export default function Products() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [selectedSubjects, setSelectedSubjects] = useState({});
-  const [, setLocation] = useLocation();
   const { addToCart } = useContext(CartContext);
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
 
@@ -93,11 +94,8 @@ export default function Products() {
       return;
     }
 
-    const selectedDetails = product.subjects.filter((s) => selected.includes(s.name));
-    const totalPrice = selectedDetails.reduce((sum, s) => sum + s.price, 0);
-
-    setLocation(
-      `/checkout?productId=${product._id}&title=${encodeURIComponent(selected.join(", "))}&price=${totalPrice}`
+    navigate(
+      `/checkout?productId=${product._id}&subjects=${encodeURIComponent(selected.join(", "))}`
     );
   };
 
@@ -129,7 +127,7 @@ export default function Products() {
                   </div>
                 ))}
                 <div className="button-container">
-                  <button className="add-to-cart" onClick={() => handleAddToCart(product)}>🛒 Add to Cart</button>
+                  {/* <button className="add-to-cart" onClick={() => handleAddToCart(product)}>🛒 Add to Cart</button> */}
                   <button className="buy-button" onClick={() => handleBuyNow(product)}>💳 Buy Now</button>
                 </div>
               </div>
