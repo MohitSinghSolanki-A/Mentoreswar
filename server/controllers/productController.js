@@ -13,12 +13,13 @@ const getProducts = async (req, res) => {
 // Add a new product
 const addProduct = async (req, res) => {
   try {
-    const { title, description, price, isTestSeries, subjects } = req.body;
+    const { title, description, price, isTestSeries, subjects, imageUrl } = req.body;
 
     const newProduct = new Product({
       title,
       description,
       price,
+      imageUrl: imageUrl || "https://via.placeholder.com/300x200",
       isTestSeries,
       subjects: isTestSeries ? subjects : [],
     });

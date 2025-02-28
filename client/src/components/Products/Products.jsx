@@ -106,32 +106,36 @@ export default function Products() {
       <div className="products-grid">
         {products.map((product) => (
           <div key={product._id} className="product-card">
-            <img src={product.imageUrl} alt={product.title} className="product-image" />
-            <h3 className="product-title">{product.title}</h3>
-            <p className="product-description">{product.description}</p>
+            <div className="product-image-container">
+              <img src={product.imageUrl || "https://via.placeholder.com/300x200"} alt={product.title} className="product-image" />
+            </div>
+            <div className="product-content">
+              <h3 className="product-title">{product.title}</h3>
+              <p className="product-description">{product.description}</p>
 
-            {product.isTestSeries && (
-              <div className="subjects-container">
-                <h4 className="subjects-title">Select Subjects:</h4>
-                {product.subjects.map((subject) => (
-                  <div key={subject.name} className="subject-item">
-                    <input
-                      type="checkbox"
-                      id={`${product._id}-${subject.name}`}
-                      checked={selectedSubjects[product._id]?.includes(subject.name) || false}
-                      onChange={() => handleSubjectSelection(product._id, subject)}
-                    />
-                    <label htmlFor={`${product._id}-${subject.name}`} className="subject-label">
-                      {subject.name} - ₹{subject.price}
-                    </label>
+              {product.isTestSeries && (
+                <div className="subjects-container">
+                  <h4 className="subjects-title">Select Subjects:</h4>
+                  {product.subjects.map((subject) => (
+                    <div key={subject.name} className="subject-item">
+                      <input
+                        type="checkbox"
+                        id={`${product._id}-${subject.name}`}
+                        checked={selectedSubjects[product._id]?.includes(subject.name) || false}
+                        onChange={() => handleSubjectSelection(product._id, subject)}
+                      />
+                      <label htmlFor={`${product._id}-${subject.name}`} className="subject-label">
+                        {subject.name} - ₹{subject.price}
+                      </label>
+                    </div>
+                  ))}
+                  <div className="button-container">
+                    {/* <button className="add-to-cart" onClick={() => handleAddToCart(product)}>🛒 Add to Cart</button> */}
+                    <button className="buy-button" onClick={() => handleBuyNow(product)}>💳 Buy Now</button>
                   </div>
-                ))}
-                <div className="button-container">
-                  {/* <button className="add-to-cart" onClick={() => handleAddToCart(product)}>🛒 Add to Cart</button> */}
-                  <button className="buy-button" onClick={() => handleBuyNow(product)}>💳 Buy Now</button>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         ))}
       </div>
