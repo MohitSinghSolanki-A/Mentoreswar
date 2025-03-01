@@ -9,6 +9,7 @@ import Checkout from "./components/Checkout/Checkout";
 import Footer from "./components/Footer/Footer";
 import Contact from "./components/Contactus/contactus";
 import ThankYou from "./components/thankyou/thankyou";
+import AboutUs from "./components/aboutus/AboutUs";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path='/thankyou' element={<ThankYou />} />
             <Route path='/contact' element={<Contact />} />
+            <Route path='/aboutus' element={<AboutUs />} />
           </Routes>
         </div>
 
