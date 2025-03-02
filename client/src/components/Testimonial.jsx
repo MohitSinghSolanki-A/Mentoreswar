@@ -19,15 +19,19 @@ export default function Testimonial() {
 
   return (
     <section className="testimonials">
-      <h2>What Our Clients Say</h2>
-      <div className="testimonial-grid">
-        {testimonials.map(testimonial => (
-          <div key={testimonial.id} className="testimonial-card">
-            <p>"{testimonial.text}"</p>
-            <h3>{testimonial.name}</h3>
-            <span>{testimonial.role}</span>
+      <div className='testimonials-container'>
+        <div className='heading'>
+          <h1>What Our Clients Say</h1>
+          <div className="testimonial-grid">
+            {testimonials.map(testimonial => (
+              <div key={testimonial.id} className="testimonial-card">
+                <p>"{testimonial.text}"</p>
+                <h3>{testimonial.name}</h3>
+                <span>{testimonial.role}</span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

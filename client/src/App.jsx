@@ -15,19 +15,19 @@ export default function App() {
     <Router>
       <div className="app-container">
         <Navbar />
-        <div className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path='/thankyou' element={<ThankYou />} />
-            <Route path='/contact' element={<Contact />} />
-          </Routes>
-        </div>
 
-        <Footer />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path='/thankyou' element={<ThankYou />} />
+          <Route path='/contact' element={<Contact />} />
+        </Routes>
+
+
+        {/* <Footer /> */}
       </div>
     </Router>
   );
