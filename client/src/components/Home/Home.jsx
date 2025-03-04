@@ -5,6 +5,8 @@ import Testimonial from '../Testimonial'
 import FAQ from '../FAQ/FAQ'
 import './Home.css'
 import Newsletter from '../Newsletter/Newsletter'
+import Helpsection from '../Helpsection/Helpsection'
+
 
 export default function Home() {
   return (
@@ -13,6 +15,7 @@ export default function Home() {
       <Feature />
       <Mentor />
       <Newsletter />
+      <Helpsection />
       {/* <Testimonial /> */}
       {/* <FAQ /> */}
     </div>
