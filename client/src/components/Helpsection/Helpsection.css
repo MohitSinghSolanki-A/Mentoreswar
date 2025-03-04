@@ -1,0 +1,12 @@
+.helpsection_widgets {
+  background-color: var(--primary-color);
+}
+
+.helpsection-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+

@@ -1,0 +1,92 @@
+.subscribe_widgets {
+  position: relative;
+}
+
+.newsletter-container {
+  max-width: 1440px;
+  width: 100%;
+  padding: 40px 40px;
+  margin: 0 auto; /* Centers the container */
+}
+
+.newsletter-section {
+  background-color: antiquewhite;
+  display: flex;
+  border-radius: 1rem;
+}
+
+.subscribe_text {
+  font-size: 2.25rem;
+  font-weight: 700;
+  align-items: center;
+}
+
+.animated-icon {
+  font-size: 3rem; /* Adjusts the size of the icon */
+  color: #007bff; /* Icon color */
+  animation: bounce 2s infinite; /* Applies the animation */
+}
+
+/* Keyframes for the bounce animation */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0); /* Starts and ends at the original position */
+  }
+  50% {
+    transform: translateY(-10px); /* Moves the icon upward */
+  }
+}
+
+.animated-icon .rotation-25 {
+  transform: rotate(25deg);
+}
+
+.newsletter-form {
+  display: flex; /* Use flexbox for easy alignment */
+  max-width: 500px; /* Limit the width for readability */
+  margin-top: 20px;
+  position: relative;
+}
+
+.email-input {
+  padding: 1.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px; /* Rounded left corners */
+  flex-grow: 1; /* Allow input to grow */
+  outline: none; /* Remove default focus outline */
+}
+
+.subscribe-button {
+  background-color: #007bff; /* Example button color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px; /* Rounded right corners */
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.subscribe-button:hover {
+  background-color: #0056b3; /* Darker color on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .newsletter-form {
+    flex-direction: column; /* Stack input and button on smaller screens */
+    align-items: stretch; /* Stretch items to full width */
+  }
+
+  .email-input {
+    border-radius: 4px; /* Round all corners on small screens */
+    margin-bottom: 10px; /* Add space between input and button */
+  }
+
+  .subscribe-button {
+    border-radius: 4px; /* round all corners on small screens */
+  }
+}
