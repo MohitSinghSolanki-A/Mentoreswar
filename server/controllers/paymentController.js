@@ -4,6 +4,7 @@ const Product = require("../models/Product"); // Import Product model
 const crypto = require("crypto");
 require("dotenv").config();
 
+
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
     throw new Error("❌ Missing Razorpay API keys in environment variables");
 }
