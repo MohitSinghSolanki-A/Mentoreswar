@@ -7,6 +7,10 @@ const bodyParser = require("body-parser");
 const productRoutes = require("./routes/products.js");
 const paymentRoutes = require("./routes/paymentRoutes");
 const emailRoutes = require("./routes/emailroute.js");
+const uploadRoutes = require("./routes/uploadRoutes");
+
+
+
 
 dotenv.config();
 
@@ -21,7 +25,7 @@ app.use(bodyParser.json());
 
 
 
-
+app.use("/api/uploads", uploadRoutes);
 app.use("/api/call", emailRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
