@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 import "./Checkout.css";
 
 const Checkout = () => {
@@ -28,8 +29,13 @@ const Checkout = () => {
             setLoading(true);
             setError(null);
             const { data } = await axios.get(`${API_BASE_URL}/api/products/${id}`);
+
+            const filteredSubjects = data.subjects.filter(subject => {
+                return selectedSubjects.includes(subject.name);
+            });
+
             setProduct(data);
-            setSelectedSubjectsData(data.subjects.filter(subject => selectedSubjects.includes(subject.name)));
+            setSelectedSubjectsData(filteredSubjects);
         } catch (error) {
             console.error("Error fetching product:", error);
             setError("Failed to fetch product details. Please try again.");
@@ -40,7 +46,9 @@ const Checkout = () => {
 
     const calculateTotalPrice = () => {
         return selectedSubjectsData.reduce((total, subject) => total + subject.price, 0);
+
     };
+    console.log("Calculated Total Price:", calculateTotalPrice());
 
     const handlePayment = async () => {
         const token = localStorage.getItem("token");
@@ -57,15 +65,21 @@ const Checkout = () => {
                 {
                     userId,
                     productIds: [productId],
+                    subjects: selectedSubjectsData.map(subject => ({
+                        subjectId: subject._id,
+                        name: subject.name,
+                        price: subject.price,
+                        pdfUrl: subject.pdfUrl
+                    })),
                     amount: calculateTotalPrice(),
                 },
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
+            console.log("Order API Response:", data);
 
             if (data.orderId) {
-                // Store course details in localStorage before payment
                 const purchasedCourses = JSON.parse(localStorage.getItem("purchasedCourses")) || [];
                 const newPurchase = {
                     productId: product._id,
@@ -95,30 +109,43 @@ const Checkout = () => {
             return;
         }
         const userId = localStorage.getItem("userId");
+        const productIds = [productId];
 
         const options = {
             key: RAZORPAY_KEY_ID,
-            amount: amount * 100,
+            amount: amount,
             currency: "INR",
             order_id: orderId,
             handler: async (response) => {
                 try {
                     const { data } = await axios.post(
                         `${API_BASE_URL}/api/payment/verify-payment`,
-                        { ...response, userId },
+                        {
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature,
+                            userId,
+                            productIds,
+                            subjects: selectedSubjectsData.map(subject => ({
+                                subjectId: subject._id,
+                                name: subject.name,
+                                price: subject.price,
+                                pdfUrl: subject.pdfUrl
+                            })),
+                        },
                         { headers: { Authorization: `Bearer ${token}` } }
                     );
 
                     if (data.success) {
-                        console.log(data)
-                        alert("✅ Payment successful! Thank you for your purchase.");
+                        toast("✅ Payment successful! Thank you for your purchase.");
                         navigate("/thankyou");
+                        localStorage.removeItem("purchasedCourses");
                     } else {
-                        alert("⚠️ Payment verification failed. Please contact support.");
+                        toast("⚠️ Payment verification failed. Please contact support.");
                     }
                 } catch (error) {
                     console.error("Verification Error:", error);
-                    alert("❌ Error verifying payment. Please try again.");
+                    toast("❌ Error verifying payment. Please try again.");
                 }
             },
         };

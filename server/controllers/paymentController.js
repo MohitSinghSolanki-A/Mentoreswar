@@ -1,10 +1,10 @@
 const Razorpay = require("razorpay");
 const Order = require("../models/Order");
-const Product = require("../models/Product"); // Import Product model
+const Product = require("../models/Product");
 const crypto = require("crypto");
 require("dotenv").config();
 
-
+// ✅ Initialize Razorpay
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
     throw new Error("❌ Missing Razorpay API keys in environment variables");
 }
@@ -14,53 +14,35 @@ const razorpay = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
+// ✅ Create an Order
 exports.createOrder = async (req, res) => {
     try {
-        const { productIds, userId } = req.body;
+        const { productIds, userId, subjects } = req.body;
 
         if (!Array.isArray(productIds) || productIds.length === 0) {
             return res.status(400).json({ success: false, message: "No products selected" });
         }
 
-        const products = await Product.find({ _id: { $in: productIds } }).lean();
-
-        if (products.length !== productIds.length) {
-            return res.status(404).json({ success: false, message: "One or more products not found" });
+        //adding subjects prices
+        let totalAmount = 0;
+        for (let i = 0; i < subjects.length; i++) {
+            totalAmount += subjects[i].price;
         }
 
-        let totalAmount = req.body.amount;
 
-        // ✅ Apply 10% discount for multiple products
-        if (products.length > 1) {
-            totalAmount *= 0.9; // 10% discount
-        }
-
-        const amountInPaise = Math.round(totalAmount * 100);
-
-        // 🔹 Create Razorpay order
+        // 🔹 Create Razorpay order (DO NOT save in DB)
         const razorpayOrder = await razorpay.orders.create({
-            amount: amountInPaise,
+            amount: totalAmount * 100,
             currency: "INR",
-            receipt: `order_${Date.now()}`,
+            receipt: "order_receipt_" + new Date().getTime(),
             notes: { userId, productIds: JSON.stringify(productIds) },
         });
-
-        // 🔹 Save order to database
-        const newOrder = new Order({
-            userId,
-            productIds,
-            amount: amountInPaise, // Store amount in paise for consistency
-            razorpay_order_id: razorpayOrder.id,
-            status: "pending",
-        });
-
-        await newOrder.save();
 
         res.json({
             success: true,
             message: "Order created successfully",
             orderId: razorpayOrder.id,
-            amount: totalAmount, // Return amount in rupees for frontend
+            amount: totalAmount * 100,
             currency: "INR",
         });
     } catch (error) {
@@ -69,49 +51,56 @@ exports.createOrder = async (req, res) => {
     }
 };
 
-// ✅ **Verify Payment**
+
+// ✅ Verify Payment & Store Data in DB
 exports.verifyPayment = async (req, res) => {
     try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, userId, productIds, subjects } = req.body;
 
-        // 🔹 Validate required fields
-        if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+        if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !userId || !productIds || !subjects) {
             return res.status(400).json({ success: false, message: "Missing payment details" });
         }
 
-        // 🔹 Fetch the order from the database
-        const order = await Order.findOne({ razorpay_order_id });
-
-        if (!order) {
-            return res.status(404).json({ success: false, message: "Order not found" });
-        }
-
-        // 🔹 Prevent re-verification of already paid orders
-        if (order.status === "paid") {
-            return res.status(200).json({ success: true, message: "Order already verified", verified: true });
-        }
-
-        // 🔹 Verify payment signature using HMAC SHA256
-        const hmac = crypto
+        const generatedSignature = crypto
             .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
             .update(`${razorpay_order_id}|${razorpay_payment_id}`)
             .digest("hex");
 
-        if (hmac !== razorpay_signature) {
-            order.status = "failed";
-            await order.save();
-            return res.status(400).json({ success: false, message: "Invalid payment signature" });
+        if (generatedSignature !== razorpay_signature) {
+            return res.status(403).json({ success: false, message: "Invalid payment signature" });
         }
 
-        // 🔹 Update order status as 'paid' in database
-        order.status = "paid";
-        order.razorpay_payment_id = razorpay_payment_id;
-        order.razorpay_signature = razorpay_signature;
-        await order.save();
+        let totalAmount = 0;
+        for (let i = 0; i < subjects.length; i++) {
+            totalAmount += subjects[i].price;
+        }
+        console.log(totalAmount);
 
-        res.json({ success: true, message: "Payment verified successfully", verified: true });
+        console.log("subjecs", req.body.subjects);
+
+        const newOrder = new Order({
+            userId,
+            productIds,
+            subjects: req.body.subjects,
+            amount: totalAmount,
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature,
+            status: "paid",
+        });
+
+        await newOrder.save();
+
+        res.json({
+            success: true,
+            message: "Payment verified & order saved",
+            subjects: req.body.subjects,
+            verified: true
+        });
     } catch (error) {
         console.error("❌ Payment verification error:", error);
         res.status(500).json({ success: false, message: "Error verifying payment" });
     }
 };
+
+

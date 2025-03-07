@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
     {
       name: String,
       price: Number,
+      pdfUrl: String,
     },
   ],
 });
