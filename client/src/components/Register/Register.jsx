@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Register.css";
+import RegistrationForm from "../RegistrationForm";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -45,38 +46,14 @@ export default function Register() {
 
 
     return (
-        <div className="register-container">
-            <ToastContainer />
-            <div className="register-form">
-                <h2>Register</h2>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Full Name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                    <button type="submit">Register</button>
-                </form>
-                <p>Already have an account? <span className="login-link" onClick={() => navigate("/login")}>Login here</span></p>
+        <div className="home">
+            <div className="register-container">
+                <ToastContainer />
+                <div className="register-form">
+                    <h2 >Create an account</h2>
+                    <p>Already have and account <a href="">Login</a></p>
+                    <RegistrationForm />
+                </div>
             </div>
         </div>
     );

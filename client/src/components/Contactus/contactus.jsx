@@ -27,15 +27,17 @@ const Contact = () => {
     };
 
     return (
-        <div className="contact-container">
-            <h2>Request a Callback</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
-                <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
-                <input type="tel" name="phone" placeholder="Your Phone" value={formData.phone} onChange={handleChange} required />
-                <button type="submit">Request a Call</button>
-            </form>
-            {message && <p className="response-message">{message}</p>}
+        <div className="home">
+            <div className="contact-container">
+                <h2>Request a Callback</h2>
+                <form onSubmit={handleSubmit}>
+                    <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
+                    <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
+                    <input type="tel" name="phone" placeholder="Your Phone" value={formData.phone} onChange={handleChange} required />
+                    <button type="submit">Request a Call</button>
+                </form>
+                {message && <p className="response-message">{message}</p>}
+            </div>
         </div>
     );
 };

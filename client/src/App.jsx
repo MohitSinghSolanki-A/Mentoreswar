@@ -16,13 +16,15 @@ import Contact from "./components/Contactus/contactus";
 import Mentorship from "./components/Mentorships/Mentorship";
 import TestSeries from "./components/Testseries/TestSeries";
 
+
 export default function App() {
   return (
     <Router>
       <div className="app-container">
         <Navbar />
 
-        {/* ✅ ToastContainer should be placed here, outside Routes */}
+        <div className="main-content">
+     
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -47,7 +49,8 @@ export default function App() {
           <Route path='/mentorship' element={<Mentorship />} />
           <Route path='testseries' element={<TestSeries />} />
         </Routes>
-
+ 
+        </div>
         <Footer />
       </div>
     </Router>

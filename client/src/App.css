@@ -14,6 +14,9 @@
   --text-color: #121212;
   --text-color-white: #ffffff;
   --border-color: #e8e0e0;
+  --primary-color-1: #6d54b5;
+  --hover-color: #513b93;
+  --footer-background: #1c182a;
 }
 
 body {
@@ -30,15 +33,15 @@ body,
   flex-direction: column;
 }
 
-/* .app-container {
+.app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-} */
+}
 
-/* .main-content {
+.main-content {
   flex: 1;
-} */
+}
 
 /* Footer styling */
 .footer {
@@ -67,7 +70,7 @@ body,
 }
 
 .flex {
-  display: flex;
+  display: flex !important;
 }
 
 .gap-20 {
@@ -75,8 +78,21 @@ body,
 }
 
 .item-align {
-  display: flex;
   align-items: center;
+}
+
+.item-start {
+  align-items: start;
+}
+.item-end {
+  align-items: end;
+}
+
+.item-align-grid {
+  align-items: center;
+}
+.align-text {
+  text-align: center;
 }
 
 .rotation-25 {
@@ -87,6 +103,22 @@ body,
   transform: rotate(25deg);
 }
 
-.flex-direction{
+.flex-direction {
   flex-direction: column;
+}
+
+h2 {
+  color: var(--text-color);
+}
+
+.primary-btn {
+  background-color: var(--primary-color-1);
+  padding: 1rem 2rem !important;
+  margin-top: 0 !important;
+}
+
+.primary-btn:hover {
+  background-color: var(--hover-color);
+  padding: 1rem 2rem !important;
+  margin-top: 0 !important;
 }

@@ -1,6 +1,13 @@
 /* General Container */
+/* .home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 79px;
+} */
+
 .products-container {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -15,7 +22,7 @@
 }
 
 .title::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -128,7 +135,7 @@
   margin-bottom: 15px;
   line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  /* -webkit-line-clamp: 3px; */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -206,7 +213,6 @@
 }
 
 .btn-buy:hover {
-
   /* Button container */
   .button-container {
     display: flex;

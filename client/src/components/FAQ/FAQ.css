@@ -1,83 +1,79 @@
 /* General container styles */
 .container {
-  max-width: 2000px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  max-width: 1440px;
+  padding: 80px 20px;
+  width: 100%;
+  background: var(--background-color);
+  margin: 0 auto;
 }
 
 .faq-title {
   text-align: center;
-  font-size: 24px;
+  font-size: 3rem;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
-/* Accordion styles */
+.accordion-drop-down {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 960px;
+}
+
 .accordion {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.accordion-item {
+/* .accordion-item {
   background: white;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.2s ease-in-out;
-}
+} */
 
-.accordion-item:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Accordion button */
-.accordion-item button {
-  width: 100%;
-  background: #007bff;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 15px;
-  border: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  outline: none;
-  transition: background 0.3s ease-in-out;
-}
-
-.accordion-item button:hover {
-  background: #0056b3;
+.accordion-item {
+  margin: 1rem 0;
 }
 
 .accordion-title {
-  flex: 1;
-  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.icon {
-  transition: transform 0.3s ease-in-out;
+.ques {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Rotate the icon when active */
-.accordion-item button[aria-expanded="true"] .icon {
-  transform: rotate(180deg);
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  background: var(--background-color);
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 5px rgba(16, 24, 79, 0.5);
+  position: relative;
+  z-index: 1;
 }
 
 /* Accordion content */
 .accordion-content {
-  padding: 15px;
+  padding: 1.5rem 1.5rem 0.75rem 1.5rem;
   background: #f1f1f1;
   color: #333;
   font-size: 14px;
   line-height: 1.5;
   border-top: 1px solid #ddd;
   animation: slideDown 0.3s ease-in-out;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  position: relative;
+  top: -15px;
+  z-index: 0;
 }
 
 /* Smooth dropdown animation */
