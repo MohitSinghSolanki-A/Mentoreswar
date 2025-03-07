@@ -9,7 +9,7 @@ import Checkout from "./components/Checkout/Checkout";
 import Footer from "./components/Footer/Footer";
 import ThankYou from "./components/thankyou/thankyou";
 import AboutUs from "./components/aboutus/AboutUs";
-import Contact from "./components/Contactus/contactus";
+import ContactUs from "./components/Contactus/contactus";
 
 export default function App() {
   return (
@@ -17,16 +17,18 @@ export default function App() {
       <div className="app-container">
         <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path='/thankyou' element={<ThankYou />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/aboutus' element={<AboutUs />} />
-        </Routes>
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path='/thankyou' element={<ThankYou />} />
+            <Route path='/contact' element={<ContactUs />} />
+            <Route path='/aboutus' element={<AboutUs />} />
+          </Routes>
+        </div>
 
         <Footer />
       </div>

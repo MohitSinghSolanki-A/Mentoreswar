@@ -1,0 +1,96 @@
+.mt-1rem {
+  margin-top: 1rem;
+}
+
+.register-form {
+  background: #1c182a;
+  width: 100%;
+  max-width: 30vw;
+  padding: 2rem;
+  border-radius: 1rem;
+  color: white !important;
+}
+
+/*custom column counts*/
+.col-1 {
+  column-count: 1;
+}
+.col-2 {
+  column-count: 2;
+}
+
+/*custom width*/
+.w-full {
+  width: 100%;
+}
+
+/* 
+.col-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.col-3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+  max-width: 70%;
+}
+
+.col-2 > div {
+  flex: 1;
+}
+
+.register-form {
+  background: #1c182a;
+  width: 100%;
+  max-width: 30vw;
+  padding: 2rem;
+  border-radius: 1rem;
+  color: white !important;
+}
+
+.input-box {
+  background: #242036;
+  border: 1px solid #3b3556;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #fff;
+  padding: 1rem;
+}
+
+.input-box::placeholder {
+  font-size: 1rem;
+  color: #5a537c;
+}
+
+.flex {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.check-box-size {
+  width: 20px;
+  height: 20px;
+}
+
+/* .col-3.item-align-grid.align-text {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  width: 100%; 
+} */
+
+/* .col-3.item-align-grid.align-text p {
+  margin: 0 10px; 
+  white-space: nowrap; 
+} */
+
+/* .col-3.item-align-grid.align-text .bg {
+  height: 1px; 
+  background-color: #ccc; 
+  flex: 1; 
+} */

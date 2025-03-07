@@ -128,38 +128,40 @@ const Checkout = () => {
     };
 
     return (
-        <div className="checkout-container">
-            <div className="checkout-box">
-                <h2>Course Checkout</h2>
-                <div className="course-details">
-                    {loading ? (
-                        <p>Loading product details...</p>
-                    ) : error ? (
-                        <p className="error">❌ {error}</p>
-                    ) : product ? (
-                        <>
-                            <h3>{product.title}</h3>
-                            <p>{product.description}</p>
-                            <h4>Selected Subjects:</h4>
-                            <ul>
-                                {selectedSubjectsData.length > 0 ? (
-                                    selectedSubjectsData.map(subject => (
-                                        <li key={subject._id}>
-                                            {subject.name} - ₹{subject.price}
-                                        </li>
-                                    ))
-                                ) : (
-                                    <p>⚠️ No subjects selected.</p>
-                                )}
-                            </ul>
-                            <h3>Total: ₹{calculateTotalPrice()}</h3>
-                        </>
-                    ) : (
-                        <p>❌ Product not found.</p>
-                    )}
-                    <button className="pay-btn" onClick={handlePayment} disabled={!product || loading || selectedSubjectsData.length === 0}>
-                        Buy Now
-                    </button>
+        <div className="home">
+            <div className="checkout-container">
+                <div className="checkout-box">
+                    <h2>Course Checkout</h2>
+                    <div className="course-details">
+                        {loading ? (
+                            <p>Loading product details...</p>
+                        ) : error ? (
+                            <p className="error">❌ {error}</p>
+                        ) : product ? (
+                            <>
+                                <h3>{product.title}</h3>
+                                <p>{product.description}</p>
+                                <h4>Selected Subjects:</h4>
+                                <ul>
+                                    {selectedSubjectsData.length > 0 ? (
+                                        selectedSubjectsData.map(subject => (
+                                            <li key={subject._id}>
+                                                {subject.name} - ₹{subject.price}
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <p>⚠️ No subjects selected.</p>
+                                    )}
+                                </ul>
+                                <h3>Total: ₹{calculateTotalPrice()}</h3>
+                            </>
+                        ) : (
+                            <p>❌ Product not found.</p>
+                        )}
+                        <button className="pay-btn" onClick={handlePayment} disabled={!product || loading || selectedSubjectsData.length === 0}>
+                            Buy Now
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
